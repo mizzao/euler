@@ -1,12 +1,15 @@
-def sieve(limit):
-    # Initialize list up to a limit
-    a = [True] * limit
-    a[0] = False
-    a[1] = False
+import numpy as np
+from math import ceil
 
-    for (i, prime) in enumerate(a):
-        if prime:
-            yield i
-            # Iterate from square of number up to max
-            for n in range(i*i, limit, i):
-                a[n] = False
+def sieve(limit):
+    numbers = np.arange(limit)
+    sieve = np.ones(limit, dtype=bool)
+
+    sieve[0] = False
+    sieve[1] = False
+
+    for n in range(ceil(np.sqrt(limit))):
+        if sieve[n]:
+            sieve[n*n::n] = False
+
+    return numbers[sieve]
